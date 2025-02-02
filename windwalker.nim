@@ -5,15 +5,13 @@ import strutils
 
 var gracz_hp = 100
 
-type 
-  Squish = enum 
-    Pauweł = 80
-    Pauweł_2 = 90
-    Kitek = 120
-    Relaxo = 125
-    Bałszkitka = 150
+var pauweł = (a: 80, b: "Pauweł")
+var pauweł_2 = (a: 90, b: "Pauweł 2")
+var kitek = (a: 120, b: "Kitek")
+var relaxo = (a: 125, b: "Relaxo")
+var bałszkitka = (a: 150, b: "Bałszkitka")
 
-var squishy_squad = [Pauweł, Pauweł_2, Kitek, Relaxo, Bałszkitka] 
+var squishy_squad = [pauweł.b, pauweł_2.b, kitek.b, relaxo.b, bałszkitka.b] 
 
 proc wygrana (win: string = "WYGRAŁEŚ MORDO!"): string =
   echo $win
@@ -24,19 +22,12 @@ proc przegrana (lsr: string = "OJOJOJ, NIE UDAŁO SIEM WYGRAĆ Z NASZYM SQUISHY 
 proc wynik (rsl: string = "A OTO WYNIK NASZEJ WALKI, ZIOMECZKU"): string =
   while gracz_hp > 0:
 
-    if gracz_hp.ord > Pauweł.ord or gracz_hp.ord > Pauweł_2.ord or gracz_hp.ord > Kitek.ord or gracz_hp.ord > Relaxo.ord or gracz_hp.ord > Bałszkitka.ord:
+    if gracz_hp > pauweł.a or gracz_hp > pauweł_2.a or gracz_hp > kitek.a or gracz_hp > relaxo.a or gracz_hp > bałszkitka.a:
       echo wygrana()
       break
-    elif gracz_hp < Pauweł.ord or gracz_hp.ord < Pauweł_2.ord or gracz_hp.ord < Kitek.ord or gracz_hp.ord < Relaxo.ord or gracz_hp.ord < Bałszkitka.ord:
+    elif gracz_hp < pauweł.a or gracz_hp < pauweł_2.a or gracz_hp < kitek.a or gracz_hp < relaxo.a or gracz_hp < bałszkitka.a:
       echo przegrana()
       break
-
-proc losowanie (los: string = "Czas na losowanie przeciwnika"): string =
-  shuffle(squishy_squad)
-  var przeciwnik = sample(squishy_squad)
-  echo przeciwnik.ord
-
-var przeciwnikfinal = losowanie()
 
 while gracz_hp > 0:
   
@@ -62,8 +53,13 @@ while gracz_hp > 0:
     echo przeciwnik
     echo "Zaczynajmy!"
     gracz_hp -= rand(1..150)
-    przeciwnik.ord -= rand(1..150)
-
+    #przeciwnik -= rand(1..150) #nie, koniec na dzisiaj, nadal tu jest problem i nie wiem jak połączyć nazwę ze zdrowiem u random przeciwnika 
+    
+    
+    sleep 2000
+    echo "Po ciężkiej walce Twoje zdrówko to " & $gracz_hp & " a zdróweczko Twojego przeciwnika to " & $przeciwnik
+    sleep 2000
+    echo wynik()
 
   
 
